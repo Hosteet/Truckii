@@ -6,6 +6,17 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const User = require('../models/User');
 
+const Email = require('smtpjs');
+const smtpConfig = {
+  host: 'smtp.elasticemail.com',
+  port: 2525, //
+  secure: false, // or true if it is a secure connection
+  auth: {
+    user: 'developer@hosteet.com',
+    pass: 'A93F415FF66F8E31FDEF2C3DB9CCB2CB1272',
+  },
+};
+
 // Signup route
 router.post(
   '/signup',
@@ -89,5 +100,6 @@ router.post(
     }
   }
 );
+  
 
 module.exports = router;

@@ -1,0 +1,49 @@
+.login-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px;
+}
+.logo {
+    width: 149px;
+    height: 37px;
+}
+.form-container>h1 {
+    font-family: 'Aeonik';
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    color: #000000;
+}
+.form-container>p {
+    font-family: 'Aeonik';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #545454;
+}
+.form-container>input {
+    width: 506px;
+    height: 506px; 
+}
+.form-container>input::placeholder {
+    font-family: 'Aeonik';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #808080;
+}
+.forgot {
+    font-family: 'Aeonik';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #360568;
+}
+.form-container>button {
+    width: 506px;
+    height: 42px;
+    color: #fff;
+    background: #360568;
+    border-radius: 4px;
+}

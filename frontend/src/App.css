@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-left: 100px;
+}
+
+.login-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px;
+    height: 90vh;
+}
+.left-section {
+    max-width: 40%;
+}
+.right-section {
+    width: 50%;
+}
+.logo {
+    width: 509px;
+    height: 37px;
+    margin-bottom: 98px;
+}
+.form-container>h1 {
+    font-family: 'Aeonik';
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    color: #000000;
+}
+.sign-in {
+    font-family: 'Aeonik';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #545454;
+    margin-bottom: 48px;
+}
+.form-fields>input {
+    width: 506px;
+    height: 50px; 
+    border: 1px solid #E6E6E6;
+    border-radius: 4px;
+}
+.form-container>input::placeholder {
+    font-family: 'Aeonik';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #808080;
+    display: none;
+}
+
+.email {
+    margin-bottom: 24px;
+}
+.forgot {
+    margin-top: 16px;
+    margin-left: 420px;
+    margin-bottom: 64px;
+    font-family: 'Aeonik';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #360568;
+}
+.sign-in-button {
+    border: none;
+    outline: none;
+    width: 506px;
+    height: 42px;
+    color: #fff;
+    background: #360568;
+    border-radius: 4px;
+}
+
+/* Right Login */
+.right-section {
+    border: 1px solid red;
+    height: 100%;
+    background: #360568;
+}
+.right-section.img {
+    margin-left: 100px;
+}
