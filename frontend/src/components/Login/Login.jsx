@@ -35,6 +35,7 @@ export default function Login() {
     //   console.error('Fetch error:', error);
     //   setError('An error occurred during the fetch request');
     // }
+
   };
 
   const handleResetPassword = () => {
