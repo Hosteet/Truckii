@@ -17,5 +17,8 @@
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.22",
     "smtpjs": "^0.0.1"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
   }
 }
