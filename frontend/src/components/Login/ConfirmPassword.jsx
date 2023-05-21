@@ -13,7 +13,7 @@ export default function ConfirmPassword() {
 
   const handleConfirmPassword = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/reset-password/${resetToken}`, {
+      const response = await fetch(`https://trucki.netlify.app/auth/reset-password/${resetToken}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,6 +54,8 @@ export default function ConfirmPassword() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <br />
+              <br />
               <input
                 type="password"
                 placeholder="Confirm New Password"
@@ -62,6 +64,8 @@ export default function ConfirmPassword() {
                 required
               />
               {error && <p className="error">{error}</p>}
+              <br />
+              <br />
               <button className="sign-in-button" type="button" onClick={handleConfirmPassword}>
                 Save Password
               </button>
