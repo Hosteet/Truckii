@@ -34,7 +34,9 @@
     line-height: 19px;
     color: #808080;
 }
-.forgot {
+.forgot>a {
+    text-decoration: none;
+    margin-top: 50px;
     font-family: 'Aeonik';
     font-weight: 500;
     font-size: 12px;

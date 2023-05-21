@@ -1,4 +1,4 @@
-// Login.js
+// ResetPassword.js
 
 import { useState } from 'react';
 import TextSlider from '../TextSlider/TextSlider';
@@ -6,28 +6,26 @@ import Logo from '../../assets/Logo.svg';
 import LoginImage from '../../assets/loginImage.png';
 import '../../App.css';
 
-export default function Login() {
+export default function ResetPassword() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/auth/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        // Handle success, e.g., save token to localStorage, redirect user, etc.
-        window.location.href = '/home'; // Redirect to home page
+        // Handle success message or display it to the user
       } else {
         const errorData = await response.json();
         setError(errorData.message);
@@ -45,8 +43,8 @@ export default function Login() {
           <img src={Logo} alt="" />
         </div>
         <div>
-          <form className="form-container" onSubmit={handleLogin}>
-            <h1 className="formHeading">Log In</h1>
+          <form className="form-container" onSubmit={handleResetPassword}>
+            <h1 className="formHeading">Reset Password</h1>
             <p className="sign-in">Sign in to continue</p>
             <div className="form-fields">
               <input
@@ -57,16 +55,9 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
               {error && <p className="error">{error}</p>}
               <button className="sign-in-button" type="submit">
-                Sign In
+                Send Reset Password
               </button>
             </div>
           </form>

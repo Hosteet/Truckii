@@ -44,9 +44,6 @@ async function sendPasswordResetEmail(email, resetUrl) {
   await transporter.sendMail(message);
 }
 
-
-
-
 // Signup route
 router.post(
   '/signup',
@@ -74,9 +71,15 @@ router.post(
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = new User({ email, password: hashedPassword });
-      await user.save();
 
-      const token = jwt.sign({ userId: user._id }, 'your-secret-key');
+      // Generate a unique token
+      const token = generateUniqueToken(email);
+
+      // Store the token in the user's database entry
+      user.token = token;
+
+      // Save the user
+      await user.save();
 
       res.status(201).json({ token });
     } catch (error) {
@@ -86,8 +89,6 @@ router.post(
   }
 );
 
-
-// Login route
 // Login route
 router.post(
   '/login',
@@ -116,51 +117,8 @@ router.post(
         return res.status(401).json({ message: 'Invalid credentials' });
       }
 
-      // Generate a JWT token
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '1h',
-      });
-
-      res.json({ token });
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  }
-);
-
-// Forgot password route
-router.post(
-  '/forgot-password',
-  [body('email').trim().isEmail().withMessage('Invalid email').normalizeEmail()],
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const { email } = req.body;
-
-      // Check if the user exists in the database
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      // Generate a unique token based on the user's email
-      const token = generateUniqueToken(email);
-
-      // Store the token and expiration time in the user document
-      user.resetToken = token;
-      user.resetTokenExpiration = Date.now() + 3600000; // 1 hour
-      await user.save();
-
-      // Send the password reset email using the unique token
-      const resetUrl = `${req.headers.origin}/reset-password/${token}`;
-      sendPasswordResetEmail(email, resetUrl);
-
-      res.json({ message: 'Password reset email sent' });
+      // Verify the token and return user ID
+      res.json({ token: user.token, userId: user._id });
     } catch (error) {
       console.error('Error:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -169,12 +127,9 @@ router.post(
 );
 
 router.post(
-  '/reset-password/:token',
+  '/reset-password',
   [
-    body('password')
-      .trim()
-      .isLength({ min: 6 })
-      .withMessage('Password must be at least 6 characters'),
+    body('email').trim().isEmail().withMessage('Invalid email').normalizeEmail(),
   ],
   async (req, res) => {
     try {
@@ -183,23 +138,17 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { token } = req.params;
-      const { password } = req.body;
+      const { email, password } = req.body;
 
-      // Find the user with the reset token
-      const user = await User.findOne({
-        resetToken: token,
-        resetTokenExpiration: { $gt: Date.now() },
-      });
+      // Find the user with the provided email
+      const user = await User.findOne({ email });
       if (!user) {
-        return res.status(404).json({ message: 'Invalid or expired token' });
+        return res.status(404).json({ message: 'User not found' });
       }
 
       // Update the password
       const hashedPassword = await bcrypt.hash(password, 10);
       user.password = hashedPassword;
-      user.resetToken = undefined;
-      user.resetTokenExpiration = undefined;
       await user.save();
 
       res.json({ message: 'Password reset successful' });
@@ -209,8 +158,5 @@ router.post(
     }
   }
 );
-
-
-
 
 module.exports = router;
