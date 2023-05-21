@@ -3,36 +3,39 @@ import Logo from '../../assets/Logo.svg';
 import LoginImage from '../../assets/loginImage.png';
 import TextSlider from '../TextSlider/TextSlider';
 import '../../App.css';
+import { useAuth } from '../../providers/AuthProvider';
 
 export default function ResetPassword() {
   const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
+  const { reset_password, error } = useAuth();
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    await reset_password(email);
 
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+    // try {
+    //   const response = await fetch('http://localhost:5000/api/auth/reset-password', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ email }),
+    //   });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        // Handle success message or display it to the user
-        window.location.href = '/reset-password/:resetToken'; // Redirect to confirm password page
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message);
-      }
-    } catch (error) {
-      console.error('Fetch error:', error);
-      setError('An error occurred during the fetch request');
-    }
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data);
+    //     // Handle success message or display it to the user
+    //     window.location.href = '/reset-password/:resetToken'; // Redirect to confirm password page
+    //   } else {
+    //     const errorData = await response.json();
+    //     setError(errorData.message);
+    //   }
+    // } catch (error) {
+    //   console.error('Fetch error:', error);
+    //   setError('An error occurred during the fetch request');
+    // }
   };
 
   return (
@@ -51,6 +54,7 @@ export default function ResetPassword() {
                 type="email"
                 placeholder="Email"
                 value={email}
+                autoComplete='email'
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
