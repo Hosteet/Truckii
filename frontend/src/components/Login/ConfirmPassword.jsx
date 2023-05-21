@@ -1,31 +1,31 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Logo from '../../assets/Logo.svg';
 import LoginImage from '../../assets/loginImage.png';
 import '../../App.css';
 import TextSlider from '../TextSlider/TextSlider';
 
-export default function Login() {
-  const [email, setEmail] = useState('');
+export default function ConfirmPassword() {
+  const { resetToken } = useParams(); // Get the resetToken from the URL params
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
+  const handleConfirmPassword = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`http://localhost:5000/api/auth/reset-password/${resetToken}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ password, confirmPassword }), // Remove resetCode from the request body
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        // Handle success, e.g., save token to localStorage, redirect user, etc.
-        window.location.href = '/home'; // Redirect to home page
+        // Handle success message or display it to the user
+        window.location.href = '/login'; // Redirect to login page
       } else {
         const errorData = await response.json();
         setError(errorData.message);
@@ -36,10 +36,6 @@ export default function Login() {
     }
   };
 
-  const handleResetPassword = () => {
-    window.location.href = '/reset-password'; // Redirect to reset password page
-  };
-
   return (
     <section className="login-container">
       <div className="left-section">
@@ -47,31 +43,27 @@ export default function Login() {
           <img src={Logo} alt="" />
         </div>
         <div>
-          <form className="form-container" onSubmit={handleLogin}>
-            <h1 className="formHeading">Log In</h1>
-            <p className="sign-in">Sign in to continue</p>
+          <form className="form-container">
+            <h1 className="formHeading">Confirm Password</h1>
+            <p className="sign-in">Enter your new password</p>
             <div className="form-fields">
               <input
-                className="email"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
                 type="password"
-                placeholder="Password"
+                placeholder="New Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <input
+                type="password"
+                placeholder="Confirm New Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
               {error && <p className="error">{error}</p>}
-              <p className="forgot" onClick={handleResetPassword}>
-                <a href="/reset-password">Forgot Password?</a>
-              </p>
-              <button className="sign-in-button" type="submit">
-                Sign In
+              <button className="sign-in-button" type="button" onClick={handleConfirmPassword}>
+                Save Password
               </button>
             </div>
           </form>

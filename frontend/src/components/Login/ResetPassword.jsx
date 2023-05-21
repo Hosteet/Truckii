@@ -1,9 +1,7 @@
-// ResetPassword.js
-
 import { useState } from 'react';
-import TextSlider from '../TextSlider/TextSlider';
 import Logo from '../../assets/Logo.svg';
 import LoginImage from '../../assets/loginImage.png';
+import TextSlider from '../TextSlider/TextSlider';
 import '../../App.css';
 
 export default function ResetPassword() {
@@ -26,6 +24,7 @@ export default function ResetPassword() {
         const data = await response.json();
         console.log(data);
         // Handle success message or display it to the user
+        window.location.href = '/reset-password/:resetToken'; // Redirect to confirm password page
       } else {
         const errorData = await response.json();
         setError(errorData.message);
@@ -45,7 +44,7 @@ export default function ResetPassword() {
         <div>
           <form className="form-container" onSubmit={handleResetPassword}>
             <h1 className="formHeading">Reset Password</h1>
-            <p className="sign-in">Sign in to continue</p>
+            <p className="sign-in">Enter your email to reset your password</p>
             <div className="form-fields">
               <input
                 className="email"
@@ -57,7 +56,7 @@ export default function ResetPassword() {
               />
               {error && <p className="error">{error}</p>}
               <button className="sign-in-button" type="submit">
-                Send Reset Password
+                Reset Password
               </button>
             </div>
           </form>
