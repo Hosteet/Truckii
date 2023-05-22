@@ -56,6 +56,8 @@ export default function ConfirmPassword() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <br />
+              <br />
               <input
                 type="password"
                 placeholder="Confirm New Password"
@@ -64,6 +66,8 @@ export default function ConfirmPassword() {
                 required
               />
               {error && <p className="error">{error}</p>}
+              <br />
+              <br />
               <button className="sign-in-button" type="button" onClick={handleConfirmPassword}>
                 Save Password
               </button>

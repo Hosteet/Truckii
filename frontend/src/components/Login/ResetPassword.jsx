@@ -13,7 +13,6 @@ export default function ResetPassword() {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     await reset_password(email);
-
     // try {
     //   const response = await fetch('http://localhost:5000/api/auth/reset-password', {
     //     method: 'POST',

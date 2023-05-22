@@ -92,3 +92,99 @@ input::placeholder {
     width: 651px;
     height: 408px;
 }
+
+
+@media only screen and (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        margin-top: 100px;
+        align-items: center;
+        padding: 0 20px;
+    }
+    .left-section {
+        margin-left: 0;
+        max-width: 100%;
+    }
+    .right-section {
+        display: none;
+    }
+    .form-container {
+        margin-top: 40px;
+    }
+    .logo {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+    .form-fields>input {
+        width: 100%;
+    }
+    .forgot {
+        margin-left: 0;
+        text-align: center;
+    }
+    .sign-in-button {
+        width: 100%;
+    }
+    .form-container {
+        width: 550px;
+        height: 550px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .form-container {
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        width: 360px;
+        height: 400px;
+    }
+    .form-container>h1 {
+        font-size: 24px;
+        line-height: 28px;
+        text-align: center;
+    }
+    .sign-in {
+        font-size: 14px;
+        line-height: 16px;
+        margin-bottom: 24px;
+    }
+    .form-fields>input {
+        width: 100%;
+    }
+    .forgot {
+        margin-left: 0;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 412px) {
+    .form-container {
+        width: 320px;
+    }
+    .form-container>h1 {
+        font-size: 22px;
+        line-height: 26px;
+        text-align: center;
+    }
+    .sign-in {
+        font-size: 12px;
+        line-height: 14px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .form-container>h1 {
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+    }
+    .sign-in {
+        font-size: 10px;
+        line-height: 12px;
+    }
+}
