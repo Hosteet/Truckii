@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { body, validationResult } = require('express-validator');
+const { body, validationResult , param} = require('express-validator');
 const router = express.Router();
 const User = require('../models/User');
 const nodemailer = require('nodemailer');
@@ -149,9 +149,10 @@ router.post(
     body('email').trim().isEmail().withMessage('Invalid email').normalizeEmail(),
     body('password').trim().notEmpty().withMessage('Password is required'),
     body('confirmPassword').trim().notEmpty().withMessage('Confirm password is required'),
-    body('resetCode').trim().notEmpty().withMessage('Reset code is required'),
+    param('resetToken').trim().notEmpty().withMessage('Reset code is required'),
   ],
   async (req, res) => {
+    console.log(req.body, req.params);
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -208,8 +209,11 @@ async function sendPasswordResetEmail(email, resetCode) {
     };
 
     // Send the email
-    const info = await transporter.sendMail(message);
-    console.log('Email sent:', info.messageId);
+    const info = await transporter.sendMail(message).catch(error => console.log(211, {error}));
+    console.log('Email sent:', resetCode, info?.messageId);
+    if(!info.messageId){
+      throw new Error('Email failed to send')
+    }
   } catch (error) {
     console.error('Error sending email:', error);
     throw error;

@@ -4,36 +4,38 @@ import Logo from '../../assets/Logo.svg';
 import LoginImage from '../../assets/loginImage.png';
 import '../../App.css';
 import TextSlider from '../TextSlider/TextSlider';
+import { useAuth } from '../../providers/AuthProvider';
 
 export default function ConfirmPassword() {
   const { resetToken } = useParams(); // Get the resetToken from the URL params
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-
+  // const [error, setError] = useState('');
+  const { confirm_password, error } = useAuth();
   const handleConfirmPassword = async () => {
-    try {
-      const response = await fetch(`https://trucki.netlify.app/auth/reset-password/${resetToken}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password, confirmPassword }), // Remove resetCode from the request body
-      });
+    await confirm_password({ password, confirmPassword, token: resetToken});
+    // try {
+    //   const response = await fetch(`http://localhost:5000/api/auth/reset-password/${resetToken}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({email, password, confirmPassword }), // Remove resetCode from the request body
+    //   });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        // Handle success message or display it to the user
-        window.location.href = '/login'; // Redirect to login page
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message);
-      }
-    } catch (error) {
-      console.error('Fetch error:', error);
-      setError('An error occurred during the fetch request');
-    }
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data);
+    //     // Handle success message or display it to the user
+    //     window.location.href = '/login'; // Redirect to login page
+    //   } else {
+    //     const errorData = await response.json();
+    //     setError(errorData.message);
+    //   }
+    // } catch (error) {
+    //   console.error('Fetch error:', error);
+    //   setError('An error occurred during the fetch request');
+    // }
   };
 
   return (
