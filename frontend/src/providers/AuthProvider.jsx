@@ -90,7 +90,6 @@ export function AuthProvider({ children }) {
       navigate("/login");
     }
   });
-
   const value = {
     currentUser,
     login,
