@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
       unAuthRoute.indexOf(
         location.pathname
       ) != -1
-      && "/reset-password/".includes(location.pathname)
+      && !"/reset-password/".includes(location.pathname)
     ) {
       navigate("/");
     }
@@ -90,7 +90,6 @@ export function AuthProvider({ children }) {
       navigate("/login");
     }
   });
-
   const value = {
     currentUser,
     login,
